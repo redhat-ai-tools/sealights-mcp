@@ -35,11 +35,19 @@ async def make_request(
             return None
 
 
+def format_apps(data: dict[list[dict[str, Any]]]) -> str:
+    lines = []
+    for item in data["apps"]:
+        lines.append(f"App Name: {item['appName']}")
+    return "\n".join(lines)
+
+
 @mcp.tool()
 async def get_apps():
     """Get list of applications."""
     url = f"{SEALIGHTS_API_BASE}/apps"
-    return await make_request(url, TokenType.API)
+    response = await make_request(url, TokenType.API)
+    return format_apps(response["data"])
 
 
 @mcp.tool()
@@ -53,8 +61,8 @@ async def get_branches(app_name: str, visibility: str = "visible"):
 
 
 @mcp.tool()
-async def get_builds(app_name: str | None = None, branch_name: str | None = None):
-    """Get list of builds. The resulting SlimBuild object only has some metadata. For extended build metadata, see Get Build Metadata."""
+async def get_builds(app_name: str = "", branch_name: str = ""):
+    """Get list of builds for a specific application (optional) and branch (optional)."""
     url = f"{SEALIGHTS_API_BASE}/slim-builds"
     params = {}
     if app_name:
