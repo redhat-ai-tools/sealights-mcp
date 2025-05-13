@@ -7,7 +7,7 @@ from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("sealights")
 
-SEALIGHTS_API_BASE = f"https://{os.environ['SL_DOMAIN']}/sl-api/v1"
+SEALIGHTS_API_BASE = f"https://{os.environ['SEALIGHTS_DOMAIN']}/sl-api/v1"
 
 
 class TokenType(Enum):
