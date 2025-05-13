@@ -71,5 +71,12 @@ async def get_build_metadata(bsid: str):
     return await make_request(url, TokenType.API)
 
 
+@mcp.tool()
+async def get_build_coverage(bsid: str):
+    """Get coverage data for a specific build by Build Session ID (bsid)."""
+    url = f"{SEALIGHTS_API_BASE}/builds/{bsid}/coverage"
+    return await make_request(url, TokenType.API)
+
+
 if __name__ == "__main__":
     mcp.run(transport="stdio")
