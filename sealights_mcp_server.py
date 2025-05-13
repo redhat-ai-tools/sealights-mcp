@@ -7,7 +7,7 @@ from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("sealights")
 
-SEALIGHTS_API_BASE = f"https://{os.environ['SEALIGHTS_DOMAIN']}/sl-api/v1"
+SEALIGHTS_API_BASE = f"{os.environ['SEALIGHTS_DOMAIN']}/sl-api/v1"
 
 
 class TokenType(Enum):
@@ -33,6 +33,7 @@ async def make_request(url: str, token_type: TokenType) -> dict[str, Any] | None
 
 @mcp.tool()
 async def get_builds():
+    """Get list of builds. The resulting SlimBuild object only has some metadata. For extended build metadata, see Get Build Metadata."""
     url = f"{SEALIGHTS_API_BASE}/slim-builds"
     return await make_request(url, TokenType.API)
 
