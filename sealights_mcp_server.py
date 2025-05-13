@@ -7,7 +7,7 @@ from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("sealights")
 
-SL_DOMAIN = os.environ["SL_DOMAIN"]
+SEALIGHTS_API_BASE = f"https://{os.environ['SL_DOMAIN']}/sl-api/v1"
 
 
 class TokenType(Enum):
@@ -29,6 +29,12 @@ async def make_request(url: str, token_type: TokenType) -> dict[str, Any] | None
         except Exception as e:
             print(e)
             return None
+
+
+@mcp.tool()
+async def get_builds():
+    url = f"{SEALIGHTS_API_BASE}/slim-builds"
+    return await make_request(url, TokenType.API)
 
 
 if __name__ == "__main__":
