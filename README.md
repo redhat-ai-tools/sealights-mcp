@@ -4,7 +4,7 @@ MCP server for SeaLights
 
 ## Running with Podman or Docker
 
-You can run the ocm-mcp server in a container using Podman or Docker:
+You can run the sealights-mcp server in a container using Podman or Docker:
 
 Example configuration for running with Podman:
 
