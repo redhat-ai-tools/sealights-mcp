@@ -8,6 +8,7 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("sealights")
 
 SEALIGHTS_API_BASE = f"{os.environ['SEALIGHTS_DOMAIN']}/sl-api/v1"
+MCP_TRANSPORT = os.environ.get("MCP_TRANSPORT", "stdio")
 
 
 class TokenType(Enum):
@@ -15,10 +16,20 @@ class TokenType(Enum):
     AGENT = "SEALIGHTS_AGENT_TOKEN"
 
 
+class TokenHeader(Enum):
+    API = "X-Sealights-Api-Token"
+    AGENT = "X-Sealights-Agent-Token"
+
+
 async def make_request(
     url: str, token_type: TokenType, params: dict[str, Any] = None
 ) -> dict[str, Any] | None:
-    token = os.environ[token_type.value]
+    if MCP_TRANSPORT == "stdio":
+        token = os.environ[token_type.value]
+    else:
+        token_header = TokenHeader[token_type.name].value
+        token = mcp.get_context().request_context.request.headers.get(token_header)
+
     headers = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/json",
@@ -101,4 +112,4 @@ async def get_live_agents():
 
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    mcp.run(transport=MCP_TRANSPORT)

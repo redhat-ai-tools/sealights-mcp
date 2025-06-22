@@ -32,6 +32,26 @@ Example configuration for running with Podman:
 }
 ```
 
+## Running with non-stdio transport
+
+To run the server with a non-stdio transport (such as SSE), set the `MCP_TRANSPORT` environment variable to a value other than `stdio` (e.g., `sse`).
+
+Example configuration to connect to a non-stdio MCP server:
+
+```json
+{
+  "mcpServers": {
+    "slack": {
+      "url": "https://ocm-mcp.example.com/sse",
+      "headers": {
+        "X-Sealights-Api-Token": "REDACTED",
+        "X-Sealights-Agent-Token": "REDACTED"
+      }
+    }
+  }
+}
+```
+
 Replace `REDACTED` with your API token according to https://api-doc.sealights.io/#authorization.
 
 ## Available Tools
