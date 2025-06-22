@@ -51,6 +51,13 @@ async def get_apps():
 
 
 @mcp.tool()
+async def get_audit_log_actions():
+    """Get a list of all actions recorded in the audit log."""
+    url = f"{SEALIGHTS_API_BASE}/audit-log-actions"
+    return await make_request(url, TokenType.API)
+
+
+@mcp.tool()
 async def get_branches(app_name: str, visibility: str = "visible"):
     """Get list of branches for a specific application."""
     url = f"{SEALIGHTS_API_BASE}/apps/{app_name}/branches"
@@ -58,6 +65,20 @@ async def get_branches(app_name: str, visibility: str = "visible"):
     if visibility:
         params["visibility"] = visibility
     return await make_request(url, TokenType.API, params)
+
+
+@mcp.tool()
+async def get_build_coverage(bsid: str):
+    """Get coverage data for a specific build by Build Session ID (bsid)."""
+    url = f"{SEALIGHTS_API_BASE}/coverage/builds/{bsid}"
+    return await make_request(url, TokenType.API)
+
+
+@mcp.tool()
+async def get_build_metadata(bsid: str):
+    """Get detailed metadata description for a specific build by Build Session ID (bsid)."""
+    url = f"{SEALIGHTS_API_BASE}/builds/{bsid}"
+    return await make_request(url, TokenType.API)
 
 
 @mcp.tool()
@@ -73,16 +94,9 @@ async def get_builds(app_name: str = "", branch_name: str = ""):
 
 
 @mcp.tool()
-async def get_build_metadata(bsid: str):
-    """Get detailed metadata description for a specific build by Build Session ID (bsid)."""
-    url = f"{SEALIGHTS_API_BASE}/builds/{bsid}"
-    return await make_request(url, TokenType.API)
-
-
-@mcp.tool()
-async def get_build_coverage(bsid: str):
-    """Get coverage data for a specific build by Build Session ID (bsid)."""
-    url = f"{SEALIGHTS_API_BASE}/coverage/builds/{bsid}"
+async def get_live_agents():
+    """Get all live agents."""
+    url = f"{SEALIGHTS_API_BASE}/agents/live"
     return await make_request(url, TokenType.API)
 
 
