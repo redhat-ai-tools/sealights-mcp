@@ -42,7 +42,7 @@ Example configuration to connect to a non-stdio MCP server:
 {
   "mcpServers": {
     "slack": {
-      "url": "https://ocm-mcp.example.com/sse",
+      "url": "https://sealights-mcp.example.com/sse",
       "headers": {
         "X-Sealights-Api-Token": "REDACTED",
         "X-Sealights-Agent-Token": "REDACTED"
